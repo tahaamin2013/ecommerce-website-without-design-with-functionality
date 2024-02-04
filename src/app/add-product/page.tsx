@@ -1,5 +1,5 @@
-// import FormSubmitButton from "@/components/FormSubmitButton";
-// import { prisma } from "@/lib/db/prisma";
+import FormSubmitButton from "@/components/FormSubmitButton";
+import { prisma } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 // import { authOptions } from "../api/auth/[...nextauth]/route";
@@ -26,9 +26,9 @@ async function addProduct(formData: FormData) {
     throw Error("Missing required fields");
   }
 
-  // await prisma.product.create({
-  //   data: { name, description, imageUrl, price },
-  // });
+  await prisma.product.create({
+    data: { name, description, imageUrl, price },
+  });
 
   redirect("/");
 }
@@ -71,8 +71,7 @@ export default async function AddProductPage() {
           type="number"
           className="input-bordered input w-full"
         />
-        {/* <FormSubmitButton className="btn-block">Add Product</FormSubmitButton> */}
-        <button type="submit" className="btn btn-primary text-lg">Add Product</button>
+        <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>
     </div>
     </div>
