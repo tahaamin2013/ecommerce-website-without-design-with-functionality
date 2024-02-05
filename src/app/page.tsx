@@ -28,10 +28,10 @@ export default async function Home({
   });
 
   return (
-    <div className="container mt-2">
+    <div className="mt-2">
       {currentPage === 1 && (
         <div className="mb-8">
-          <div className="relative flex flex-col md:flex-row items-center gap-5">
+   <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
             <Image
               src={products[0].imageUrl}
               alt={products[0].name}
@@ -44,7 +44,7 @@ export default async function Home({
               <div className="text-black">
                 <h1 className="text-3xl font-bold mb-2">{products[0].name}</h1>
                 <p className="text-sm mb-4">{products[0].description}</p>
-                <Link href={"/product/" + products[0].id} className="btn-primary btn">
+                <Link href={"/products/" + products[0].id} className="btn-primary btn">
                     Check it out
                 </Link>
               </div>
