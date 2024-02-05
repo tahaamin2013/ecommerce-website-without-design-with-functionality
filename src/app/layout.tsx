@@ -20,11 +20,11 @@ export default function RootLayout({
     <html lang="en" className="bg-base-200">
       <body className={inter.className}>
       <Navbar />
-        <main className="p-4 max-w-7xl m-auto min-w-[300px]">
+       <main className="p-4 max-w-7xl m-auto min-w-[300px]">
           
-        {children}
-        </main>
-        <Footer />
+          {children}
+          </main>
+          <Footer />
       </body>
     </html>
   );
