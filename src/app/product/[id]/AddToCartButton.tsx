@@ -9,6 +9,7 @@ interface AddToCartButtonProps {
 
 export default function AddToCartButton({
   productId,
+  incrementProductQuantity,
 }: AddToCartButtonProps) {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);
@@ -20,7 +21,7 @@ export default function AddToCartButton({
         onClick={() => {
           setSuccess(false);
           startTransition(async () => {
-            // await incrementProductQuantity(productId);
+            await incrementProductQuantity(productId);
             setSuccess(true);
           });
         }}
