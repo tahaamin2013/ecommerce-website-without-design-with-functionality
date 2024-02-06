@@ -1,8 +1,8 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Cart, CartItem, Prisma } from "@prisma/client";
+import { getServerSession } from "next-auth";
 import { cookies } from "next/dist/client/components/headers";
 import { prisma } from "./prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export type CartWithProducts = Prisma.CartGetPayload<{
   include: { items: { include: { product: true } } };
@@ -21,7 +21,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
   const session = await getServerSession(authOptions);
 
   let cart: CartWithProducts | null = null;
-  
+
   if (session) {
     cart = await prisma.cart.findFirst({
       where: { userId: session.user.id },
@@ -29,19 +29,18 @@ export async function getCart(): Promise<ShoppingCart | null> {
     });
   } else {
     const localCartId = cookies().get("localCartId")?.value;
-  
     cart = localCartId
       ? await prisma.cart.findUnique({
           where: { id: localCartId },
           include: { items: { include: { product: true } } },
         })
       : null;
-    };
-
+  }
 
   if (!cart) {
     return null;
   }
+
   return {
     ...cart,
     size: cart.items.reduce((acc, item) => acc + item.quantity, 0),
@@ -69,6 +68,7 @@ export async function createCart(): Promise<ShoppingCart> {
     // Note: Needs encryption + secure settings in real production app
     cookies().set("localCartId", newCart.id);
   }
+
   return {
     ...newCart,
     items: [],
@@ -76,7 +76,6 @@ export async function createCart(): Promise<ShoppingCart> {
     subtotal: 0,
   };
 }
-
 
 export async function mergeAnonymousCartIntoUserCart(userId: string) {
   const localCartId = cookies().get("localCartId")?.value;
