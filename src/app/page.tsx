@@ -1,4 +1,4 @@
-// import PaginationBar from "@/components/PaginationBar";
+import PaginationBar from "@/components/PaginationBar";
 import ProductCard from "@/components/ProductCard";
 import { prisma } from "@/lib/db/prisma";
 import Image from "next/image";
@@ -28,7 +28,7 @@ export default async function Home({
   });
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 flex flex-col items-center">
       {currentPage === 1 && (
         <div className="mb-8">
    <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
@@ -59,9 +59,11 @@ export default async function Home({
         ))}
       </div>
 
-      {/* {totalPages > 1 && (
+      <div className="mt-5">
+      {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
-      )} */}
+      )}
+      </div>
     </div>
   );
 }
